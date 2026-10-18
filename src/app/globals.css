@@ -1,0 +1,132 @@
+@import "tailwindcss";
+
+@theme {
+  /* Dark base */
+  --color-background: #070a14;
+  --color-foreground: #f5f7fb;
+
+  /* IAM BioWell brand palette */
+  --color-funblue: #1763a1;
+  --color-sinbad: #9dcbd0;
+  --color-cello: #1e265d;
+  --color-shipcove: #7474bc;
+
+  /* Tints for percentage-style usage / hovers */
+  --color-funblue-light: #1f7ec6;
+  --color-sinbad-deep: #7fb8bf;
+
+  /* Semantic roles (dark mode) */
+  --color-accent: #1763a1; /* Fun Blue — primary CTAs / borders */
+  --color-accent-2: #1f7ec6; /* lighter Fun Blue — hover */
+  --color-highlight: #9dcbd0; /* Sinbad — eyebrows, icons, stats, highlights */
+  --color-surface: #0e1430; /* card background (deep Cello navy) */
+  --color-surface-2: #161d44; /* elevated card */
+
+  --font-sans: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-libre-baskerville), ui-serif, Georgia, serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: #070a14;
+  color: #f5f7fb;
+}
+
+/* Seamless marquee: track holds two identical halves, slides by -50% */
+@keyframes marquee-x {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+.animate-marquee {
+  animation: marquee-x 24s linear infinite;
+  will-change: transform;
+}
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee {
+    animation: none;
+  }
+}
+
+/* Hero grid gaps: a flowing brand gradient revealed through the 8px seams,
+   with light "lines" travelling across on top. Both layers sit behind the
+   tiles, so only the gaps show them. */
+/* Base fill for the gaps: a soft, slowly pulsing blue so the seams always
+   read as glowing blue rather than black. */
+@keyframes grid-gap-pulse {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+.grid-gap-glow {
+  background: linear-gradient(125deg, #0e1430 0%, #1763a1 45%, #1f7ec6 100%);
+  animation: grid-gap-pulse 6s ease-in-out infinite;
+  will-change: opacity;
+}
+/* Bright blue -> light streaks travelling along the seams. A 480px tile holds
+   one streak; translating exactly one tile width loops seamlessly. */
+@keyframes grid-gap-lines {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 480px 0;
+  }
+}
+.grid-gap-lines {
+  background-image: repeating-linear-gradient(
+    115deg,
+    transparent 0,
+    transparent 200px,
+    rgba(31, 126, 198, 0.4) 230px,
+    rgba(157, 203, 208, 0.9) 252px,
+    rgba(220, 245, 248, 1) 258px,
+    rgba(157, 203, 208, 0.9) 264px,
+    rgba(31, 126, 198, 0.4) 286px,
+    transparent 316px,
+    transparent 480px
+  );
+  background-size: 480px 100%;
+  animation: grid-gap-lines 4.5s linear infinite;
+  mix-blend-mode: screen;
+  will-change: background-position;
+}
+@media (prefers-reduced-motion: reduce) {
+  .grid-gap-glow,
+  .grid-gap-lines {
+    animation: none;
+  }
+}
+
+/* Vignette helper reused across cinematic sections */
+.bg-grain {
+  background-image: radial-gradient(
+    ellipse at center,
+    transparent 0%,
+    rgba(0, 0, 0, 0.55) 100%
+  );
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #070a14;
+}
+::-webkit-scrollbar-thumb {
+  background: #161d44;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #1763a1;
+}
